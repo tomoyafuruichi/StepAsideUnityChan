@@ -22,8 +22,8 @@ public class ItemGenerator : MonoBehaviour
     //unitychanを入れる
     private GameObject unitychan;
 
-    private float interval = 0.9f;
-    private float time;
+    private float genPos=-160;
+
 
 
 
@@ -45,12 +45,14 @@ public class ItemGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        time += Time.deltaTime;
+    
 
-        if (time >= interval)
+        
         {
-            if (this.unitychan.transform.position.z + 50 < goalPos)
+            if (this.unitychan.transform.position.z + 50 >genPos&&genPos<goalPos)
             {
+                genPos += 15;
+
                 //アイテムの種類をランダムに決定
                 int num = Random.Range(1, 11);
                 if (num <= 2)
@@ -59,7 +61,7 @@ public class ItemGenerator : MonoBehaviour
                     for (float j = -1; j <= 1; j += 0.4f)
                     {
                         GameObject cone = Instantiate(conePrefab) as GameObject;
-                        cone.transform.position = new Vector3(4 * j, cone.transform.position.y, this.unitychan.transform.position.z + 50);
+                        cone.transform.position = new Vector3(4 * j, cone.transform.position.y, genPos);
                     }
                 }
                 else
@@ -74,16 +76,16 @@ public class ItemGenerator : MonoBehaviour
                         if (1 <= item && item <= 6)
                         {
                             GameObject coin = Instantiate(coinPrefab) as GameObject;
-                            coin.transform.position = new Vector3(posRange * j, coin.transform.position.y, this.unitychan.transform.position.z + 50 + offsetZ);
+                            coin.transform.position = new Vector3(posRange * j, coin.transform.position.y, genPos + offsetZ);
                         }
                         else if (7 <= item && item <= 9)
                         {
                             GameObject car = Instantiate(carPrefab) as GameObject;
-                            car.transform.position = new Vector3(posRange * j, car.transform.position.y, this.unitychan.transform.position.z + 50 + offsetZ);
+                            car.transform.position = new Vector3(posRange * j, car.transform.position.y, genPos + offsetZ);
                         }
                     }
                 }
-                time = 0.00f;
+              
             }
 
         }
